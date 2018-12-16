@@ -48,20 +48,19 @@ public class MyLinkedList {
 
 	public boolean add(Integer value) {
 		if (length == 0) { //neither start nor end have a real value yet
-			start.setData() = value;
+			start.setData(value);
 		}
 		if (length == 1) { //start has value but not end
-			end.setData() = value;
+			end.setData(value);
 		}
 		else { //both start and end have values, must add new one after end
-			Node added = new Node(value);
 			Node before = end.prev();
-			before.setNext() = new Node(end.getData());
-
-
-			end.setNext() = added;
-			added.setPrev() = end;
-			added.setNext() = null;
+			Node oldEnd = new Node(end.getData())
+			end.setData(value);
+			before.setNext() = oldEnd;
+			end.setPrev() = oldEnd;
+			oldEnd.setPrev() = before;
+			oldEnd.setNext() = end;
 		}
 		length++;
 		return true;
