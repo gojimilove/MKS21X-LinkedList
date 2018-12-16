@@ -1,4 +1,4 @@
-private class Node {
+class Node {
 	private Integer data;
 	private Node next,prev;
 
@@ -22,6 +22,7 @@ private class Node {
 	}
 	public Integer setData(Integer i) {
 		data = i;
+		return data;
 	}
 	public String toString() {
 		String result = "";
@@ -70,29 +71,36 @@ public class MyLinkedList {
 		return length;
 	}
 	public Integer get(int index) {
-
+		return 0;
 	}
 	public Integer set(int index, Integer value) {
-
+		return 0;
 	}
 	public boolean contains(Integer value) {
-
+		return true;
 	}
 	public int indexOf(Integer value) {
-
+		return 0;
 	}
 	public void add(int index, Integer value) {
 
 	}
 	public Integer remove(int index) {
-
+		return 0;
 	}
 	public boolean remove(Integer value) {
-
+		return true;
 	}
 	public String toString() {
 		String result = "[";
-
+		Node current = start;
+		while (current.getData() != null) {
+			result+= current.getData();
+			current = current.next();
+			result+=", ";
+		}
+		result+="]";
+		return result;
 	}
 
 }
