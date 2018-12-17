@@ -80,7 +80,10 @@ public class MyLinkedList {
 	}
 
 	public Integer set(int index, Integer value) {
-		return 0;
+		Node n = getNode(index);
+		Integer x = n.getData();
+		n.setData(value);
+		return x;
 	}
 
 	public boolean contains(Integer value) {
@@ -88,6 +91,9 @@ public class MyLinkedList {
 	}
 
 	public int indexOf(Integer value) {
+		if (!contains(value)) {
+			return -1;
+		}
 		return 0;
 	}
 
