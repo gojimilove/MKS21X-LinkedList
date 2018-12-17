@@ -4,6 +4,8 @@ class Node {
 
 	public Node(Integer x) {
 		data = x;
+		next = null;
+		prev = null;
 	}
 	public Node next() {
 		return next;
@@ -37,31 +39,21 @@ public class MyLinkedList {
 	private Node start,end;
 
 	public MyLinkedList() {
-		//start and end are both null, point to each other, (empty list) and length = 0
-		start = new Node(null);
-		end = new Node(null);
-		start.setPrev(null);
-		start.setNext(end);
-		end.setPrev(start);
-		end.setNext(null);
+		//empty list
 		length = 0;
 	}
 
 	public boolean add(Integer value) {
+		//System.out.println("Length before: "+length);
 		if (length == 0) { //neither start nor end have a real value yet
-			start.setData(value);
-		}
-		if (length == 1) { //start has value but not end
-			end.setData(value);
+			start = new Node(value);
+			end = start;
 		}
 		else { //both start and end have values, must add new one after end
-			Node before = end.prev();
-			Node oldEnd = new Node(end.getData());
-			end.setData(value);
-			before.setNext(oldEnd);
-			end.setPrev(oldEnd);
-			oldEnd.setPrev(before);
-			oldEnd.setNext(end);
+			Node n = new Node(value);
+			end.setNext(n);
+			n.setPrev(end);
+			end = n;
 		}
 		length++;
 		return true;
@@ -70,36 +62,58 @@ public class MyLinkedList {
 	public int size() {
 		return length;
 	}
+
+	private Node getNode(int index) {
+		int i = 0;
+		Node current = start.next();
+		while(current.getData() != null && i <= index) {
+			current = current.next();
+			i++;
+		}
+		return current;
+	}
+
 	public Integer get(int index) {
 		return 0;
 	}
+
 	public Integer set(int index, Integer value) {
 		return 0;
 	}
+
 	public boolean contains(Integer value) {
 		return true;
 	}
+
 	public int indexOf(Integer value) {
 		return 0;
 	}
+
 	public void add(int index, Integer value) {
 
 	}
+
 	public Integer remove(int index) {
 		return 0;
 	}
+
 	public boolean remove(Integer value) {
 		return true;
 	}
+
 	public String toString() {
 		String result = "[";
 		Node current = start;
-		while (current.getData() != null) {
-			result+= current.getData();
+		while (current != null) {
+			//System.out.println("CURRENT: "+current.getData());
+			result += current.getData();
+			if (current.next() != null) {
+				result += ", ";
+			}
 			current = current.next();
-			result+=", ";
 		}
-		result+="]";
+		
+		result += "]";
 		return result;
 	}
 
