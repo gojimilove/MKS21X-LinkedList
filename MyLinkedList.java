@@ -119,21 +119,37 @@ public class MyLinkedList {
 	}
 
 	public void add(int index, Integer value) {
+		//node at index before this one now points to this and vice versa
 		Node before = getNode(index - 1);
 		Node after = getNode(index);
 		Node n = new Node(value);
 		before.setNext(n);
 		n.setPrev(before);
+		//node at index now points to node previously at index
 		n.setNext(after);
 		after.setPrev(n);
+		//size increases
 		length++;
 	}
 
 	public Integer remove(int index) {
-		return 0;
+		Node before = getNode(index - 1);
+		Node after = getNode(index + 1);
+		Node n = getNode(index);
+		Integer x = n.getData();
+		before.setNext(after);
+		after.setPrev(before);
+		length--;
+		return x;
 	}
 
 	public boolean remove(Integer value) {
+		int i = indexOf(value);
+		Node before = getNode(i - 1);
+		Node after = getNode(i + 1);
+		before.setNext(after);
+		after.setNext(before);
+		length--;
 		return true;
 	}
 
