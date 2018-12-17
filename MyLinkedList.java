@@ -66,6 +66,9 @@ public class MyLinkedList {
 	}
 
 	private Node getNode(int index) {
+		if (index < 0 || index >= length) {
+			throw new IndexOutOfBoundsException();
+		}
 		Node current = start;
 		//go through linked list until either you reach the end or you reach the index, then return that node
 		while(current.getData() != null && index > 0) {
@@ -76,6 +79,9 @@ public class MyLinkedList {
 	}
 
 	public Integer get(int index) {
+		if (index < 0 || index >= length) {
+			throw new IndexOutOfBoundsException();
+		}
 		//get node at index
 		Node n = getNode(index);
 		//get data from that node
@@ -83,6 +89,9 @@ public class MyLinkedList {
 	}
 
 	public Integer set(int index, Integer value) {
+		if (index < 0 || index >= length) {
+			throw new IndexOutOfBoundsException();
+		}
 		//get node at index
 		Node n = getNode(index);
 		Integer x = n.getData();
@@ -119,6 +128,9 @@ public class MyLinkedList {
 	}
 
 	public void add(int index, Integer value) {
+		if (index < 0 || index >= length) {
+			throw new IndexOutOfBoundsException();
+		}
 		//node at index before this one now points to this and vice versa
 		Node before = getNode(index - 1);
 		Node after = getNode(index);
@@ -133,23 +145,57 @@ public class MyLinkedList {
 	}
 
 	public Integer remove(int index) {
-		Node before = getNode(index - 1);
-		Node after = getNode(index + 1);
 		Node n = getNode(index);
 		Integer x = n.getData();
-		before.setNext(after);
-		after.setPrev(before);
-		length--;
-		return x;
+		//if index out of bounds throw exception
+		if (index < 0 || index >= length) {
+			throw new IndexOutOfBoundsException("index out of bounds");
+		}
+		//if last element make second to last element end
+		else if (index == length - 1) {
+			end = getNode(index - 1);
+			getNode(index = 1).setNext(null);
+		}
+		//if first element make second element start
+		else if (index == 0) {
+			start = getNode(1);
+			getNode(1).setPrev(null);
+		}
+		//find nodes before and after current, make them point to each other
+		else {
+			Node before = getNode(index - 1);
+			Node after = getNode(index + 1);
+			before.setNext(after);
+			after.setPrev(before);
+		}
+		length--; //size decreases
+		return x; //return value of removed node
 	}
 
 	public boolean remove(Integer value) {
-		int i = indexOf(value);
-		Node before = getNode(i - 1);
-		Node after = getNode(i + 1);
-		before.setNext(after);
-		after.setNext(before);
-		length--;
+		int i = indexOf(value); //index of current node
+		//if index out of bounds throw exception
+		if (i < 0 || i >= length) {
+			throw new IndexOutOfBoundsException("index out of bounds");
+		}
+		//if last element make second to last element end
+		else if (i == length - 1) {
+			end = getNode(i - 1);
+			getNode(i - 1).setNext(null);
+		}
+		//if first element make second element start
+		else if (i == 0) {
+			start = getNode(1);
+			getNode(1).setPrev(null);
+		}
+		//else find nodes before and after, make them point to each other
+		else {
+			Node before = getNode(i - 1);
+			Node after = getNode(i + 1);
+			before.setNext(after);
+			after.setNext(before);
+		}
+		length--; //size decreases
 		return true;
 	}
 
