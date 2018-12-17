@@ -67,6 +67,7 @@ public class MyLinkedList {
 
 	private Node getNode(int index) {
 		Node current = start;
+		//go through linked list until either you reach the end or you reach the index, then return that node
 		while(current.getData() != null && index > 0) {
 			current = current.next();
 			index--;
@@ -75,30 +76,57 @@ public class MyLinkedList {
 	}
 
 	public Integer get(int index) {
+		//get node at index
 		Node n = getNode(index);
+		//get data from that node
 		return n.getData();
 	}
 
 	public Integer set(int index, Integer value) {
+		//get node at index
 		Node n = getNode(index);
 		Integer x = n.getData();
+		//set data for that index as value, return old value
 		n.setData(value);
 		return x;
 	}
 
 	public boolean contains(Integer value) {
-		return true;
+		//go through list, if it's not in it return false
+		Node current = start;
+		while(current != null) {
+			if (current.getData().equals(value)) {
+				return true; //if value matches then return true
+			}
+			current = current.next();
+		}
+		return false;
 	}
 
 	public int indexOf(Integer value) {
+		//return -1 if value does not exist
 		if (!contains(value)) {
 			return -1;
 		}
-		return 0;
+		int i = 0;
+		Node current = start;
+		//loop through until you find the value, then stop and return the index
+		while(current != null && !current.getData().equals(value)) {
+			current = current.next();
+			i++;
+		}
+		return i;
 	}
 
 	public void add(int index, Integer value) {
-
+		Node before = getNode(index - 1);
+		Node after = getNode(index);
+		Node n = new Node(value);
+		before.setNext(n);
+		n.setPrev(before);
+		n.setNext(after);
+		after.setPrev(n);
+		length++;
 	}
 
 	public Integer remove(int index) {
@@ -113,14 +141,12 @@ public class MyLinkedList {
 		String result = "[";
 		Node current = start;
 		while (current != null) {
-			//System.out.println("CURRENT: "+current.getData());
 			result += current.getData();
 			if (current.next() != null) {
 				result += ", ";
 			}
 			current = current.next();
 		}
-		
 		result += "]";
 		return result;
 	}
