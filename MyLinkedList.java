@@ -128,18 +128,27 @@ public class MyLinkedList {
 	}
 
 	public void add(int index, Integer value) {
-		if (index < 0 || index >= length) {
+		if (index < 0 || index > length) {
 			throw new IndexOutOfBoundsException();
 		}
+		else if (index == length) add(value);
 		//node at index before this one now points to this and vice versa
-		Node before = getNode(index - 1);
-		Node after = getNode(index);
-		Node n = new Node(value);
-		before.setNext(n);
-		n.setPrev(before);
-		//node at index now points to node previously at index
-		n.setNext(after);
-		after.setPrev(n);
+		else if (index == 0) {
+			Node n = new Node(value);
+			start.setPrev(n);
+			n.setNext(start);
+			start = n;
+		}
+		else {
+			Node before = getNode(index - 1);
+			Node after = getNode(index);
+			Node n = new Node(value);
+			before.setNext(n);
+			n.setPrev(before);
+			//node at index now points to node previously at index
+			n.setNext(after);
+			after.setPrev(n);
+		}
 		//size increases
 		length++;
 	}
