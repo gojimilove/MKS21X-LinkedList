@@ -45,14 +45,16 @@ public class MyLinkedList {
 
 	public boolean add(Integer value) {
 		//System.out.println("Length before: "+length);
-		if (length == 0) { //neither start nor end have a real value yet
+		if (length == 0) { //list is empty, make a new node start and end both point to
 			start = new Node(value);
 			end = start;
 		}
-		else { //both start and end have values, must add new one after end
+		else { //start and end both point to something
 			Node n = new Node(value);
+			//current last value now points to new node, vice versa
 			end.setNext(n);
 			n.setPrev(end);
+			//new node is now the end
 			end = n;
 		}
 		length++;
@@ -64,17 +66,17 @@ public class MyLinkedList {
 	}
 
 	private Node getNode(int index) {
-		int i = 0;
-		Node current = start.next();
-		while(current.getData() != null && i <= index) {
+		Node current = start;
+		while(current.getData() != null && index > 0) {
 			current = current.next();
-			i++;
+			index--;
 		}
 		return current;
 	}
 
 	public Integer get(int index) {
-		return 0;
+		Node n = getNode(index);
+		return n.getData();
 	}
 
 	public Integer set(int index, Integer value) {
