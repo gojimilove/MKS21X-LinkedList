@@ -208,6 +208,16 @@ public class MyLinkedList {
 		return true;
 	}
 
+	public void extend(MyLinkedList other) {
+		this.length = this.size() + other.size();
+		this.end.setNext(other.start);
+		other.start.setPrev(this.end);
+		this.end = other.end;
+		other.start = null;
+		other.end = null;
+		other.length = 0;
+	}
+
 	public String toString() {
 		String result = "[";
 		Node current = start;
